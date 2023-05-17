@@ -1,27 +1,19 @@
-import express, { Application } from "express"
-import cors from "cors";
-const mongoose = require("mongoose");
-const app: Application = express();
-const PORT: number = 5000
-
-
-app.use(cors())
-// parse data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+import mongoose from "mongoose";
+import app from "./app";
+const port: number = 5000;
 
 //database connection
-async function bootstrap() {
+async function connectDB() {
     try {
         await mongoose.connect("mongodb://127.0.0.1:27017/practice-mongoose");
         console.log(`🛢 Database connection successful`);
 
-        app.listen(PORT, () => {
-            console.log(`Server is  listening on PORT ${PORT}`);
+        app.listen(port, () => {
+            console.log(`Server is  listening on port ${port}`);
         });
     } catch (err) {
         console.log(`Failed to connect database`, err);
     }
 }
 
-bootstrap();
+connectDB();
